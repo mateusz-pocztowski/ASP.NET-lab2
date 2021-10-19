@@ -4,18 +4,24 @@ namespace WebMVC.Models
 {
     public class FormModel
     {
-
-        [Display(Name = "Nazwa elementu")]
+        [Required]
+        [Display(Name = "Imię")]
 
         public string Name { get; set; }
 
-        [Display(Name = "Opis elementu")]
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data urodzenia")]
 
-        public string Description { get; set; }
+        public System.DateTime Birthday { get; set; }
 
-        [Display(Name = "Element widoczny?")]
+        [Display(Name = "Liczba dni od daty urodzenia")]
+        public int DaysSinceBirthday {
+            get => System.Math.Abs((System.DateTime.Today.Date - Birthday.Date).Days);
+        }
 
-        public bool IsVisible { get; set; }
-
+        [Display(Name = "Czy rok urodzenia był rokiem przestępnym?")]
+        public bool IsLeapYear { get => System.DateTime.IsLeapYear(Birthday.Year); }
+        static string GetBooleanValue(bool boolean) => boolean ? "Tak" : "Nie";
     }
 }
